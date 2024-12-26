@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "target": "es2020", // Or a later version if supported by your environment
+      "module": "esnext", // Or "es2015" depending on your module system
+      "outDir": "./dist", 
+      "rootDir": "./src", // Specify the root directory of your source files
+      "strict": true, 
+      "esModuleInterop": true, 
+      "forceConsistentCasingInFileNames": true,
+      "skipLibCheck": true, 
+      "types": ["node"] ,
+      "moduleResolution": "node" 
+    },
+    "include": ["src/**/*"] 
+  }

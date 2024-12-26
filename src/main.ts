@@ -52,7 +52,7 @@ const main = async () => {
             s.stop("Product details fetched successfully.");
             p.log.success(`Product details :`);
             console.table(result.data);
-          } catch (e) {
+          } catch (e: any) {
             if (e.status === 404) {
               s.stop("Product not found.");
             } else {
@@ -69,7 +69,7 @@ const main = async () => {
             s.stop("Products list fetched");
             p.log.success(`Products list :`);
             console.table(result.data);
-          } catch (e) {
+          } catch (e: any) {
             s.stop(e.message);
           }
           break;
@@ -103,7 +103,7 @@ const main = async () => {
             s.stop("Product added successfully.");
             p.log.success(`Product added:`);
             console.table(result.data);
-          } catch (e) {
+          } catch (e: any) {
             s.stop(e.message);
           }
           break;
@@ -140,7 +140,7 @@ const main = async () => {
             s.stop("Product updated successfully.");
             p.log.success(`Product updated:`);
             console.table(result.data);
-          } catch (e) {
+          } catch (e: any) {
             s.stop(e.message);
           }
           break;
@@ -162,7 +162,7 @@ const main = async () => {
           try {
             await action.execute(productId);
             s.stop("Product deleted successfully.");
-          } catch (e) {
+          } catch (e: any) {
             s.stop(e.message);
           }
           break;
@@ -185,7 +185,7 @@ const main = async () => {
             s.stop("Products searched successfully.");
             p.log.success(`Search results:`);
             console.table(result.data);
-          } catch (e) {
+          } catch (e: any) {
             s.stop(e.message);
           }
           break;
@@ -213,6 +213,6 @@ p.confirm({
   initialValue: false,
 });
 
-await main().catch((error) => {
-  p.log.error(`An error occurred: ${error.message}`);
+await main().catch((e: any) => {
+  p.log.error(`An error occurred: ${e.message}`);
 });
