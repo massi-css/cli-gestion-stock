@@ -1,0 +1,26 @@
+{
+  "name": "frontend",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.ts",
+  "scripts": {
+    "dev": "bun dev src/main.ts",
+    "start": "bun run src/main.ts",
+    "build": "bun build src/main.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@clack/prompts": "^0.9.0",
+    "axios": "^1.7.9",
+    "chalk": "^5.4.1",
+    "chalk-animation": "^2.0.3",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}
