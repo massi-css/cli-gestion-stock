@@ -1,8 +1,15 @@
+export type choiceEnum =
+  | "get_product"
+  | "get_products"
+  | "add_product"
+  | "update_product"
+  | "delete_product"
+  | "search_product";
+
 export interface ChoiceType {
-  title: string;
+  title: choiceEnum;
   desc: string;
 }
-
 export interface Product {
   id: number;
   name: string;

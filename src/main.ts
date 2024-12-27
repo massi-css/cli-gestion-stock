@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import dotenv from "dotenv";
 import ActionsFactory from "./actionsFactory";
-import { ChoiceType } from "./types";
+import { ChoiceType, choiceEnum } from "./types";
 import color from "picocolors";
 
 const main = async () => {
@@ -22,13 +22,13 @@ const main = async () => {
   );
 
   while (true) {
-    const choice = await p.select({
+    const choice = (await p.select({
       message: "Select an action to perform:",
       options: factory.getChoices().map((c) => ({
         label: c.desc,
         value: c,
       })),
-    });
+    })) as ChoiceType;
 
     if (!choice) {
       p.log.error("No action selected. Exiting.");
@@ -36,9 +36,7 @@ const main = async () => {
       return;
     }
 
-    factory.setChosen(choice as ChoiceType);
-
-    const action = factory.createAction();
+    const action = factory.createAction(choice.title);
     if (action) {
       switch ((choice as ChoiceType).title) {
         case "get_product": {
@@ -112,24 +110,26 @@ const main = async () => {
           const productId = (await p.text({
             message: "Enter the product ID to update:",
           })) as string;
+          const pre_action = factory.createAction("get_product");
+          const oldproduct = await pre_action?.execute(productId);
           const name = (await p.text({
             message: "Enter new product name:",
-            initialValue: "example name",
+            initialValue: oldproduct.data.name,
           })) as string;
           const description = (await p.text({
             message: "Enter new product description:",
-            initialValue: "example description",
+            initialValue: oldproduct.data.description,
           })) as string;
           const price = parseFloat(
             (await p.text({
               message: "Enter new product price:",
-              initialValue: "1000",
+              initialValue: oldproduct.data.price.toString(),
             })) as string
           );
           const quantity = parseInt(
             (await p.text({
               message: "Enter new product quantity:",
-              initialValue: "100",
+              initialValue: oldproduct.data.quantity.toString(),
             })) as string
           );
           const updatedProduct = { name, description, price, quantity };

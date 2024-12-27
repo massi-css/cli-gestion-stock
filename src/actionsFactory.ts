@@ -1,14 +1,13 @@
 import {
-    ProductAction,
-    GetProductAction,
-    GetProductsAction,
-    AddProductAction,
-    UpdateProductAction,
-    DeleteProductAction,
-    SearchProductAction,
-  } from "./actions";
-  import { ChoiceType } from "./types";
-
+  ProductAction,
+  GetProductAction,
+  GetProductsAction,
+  AddProductAction,
+  UpdateProductAction,
+  DeleteProductAction,
+  SearchProductAction,
+} from "./actions";
+import { ChoiceType, choiceEnum } from "./types";
 
 class ActionsFactory {
   private choices: ChoiceType[] = [
@@ -20,18 +19,12 @@ class ActionsFactory {
     { title: "search_product", desc: "Search product by name/desc" },
   ];
 
-  private chosen: string | null = null;
-
   getChoices() {
     return this.choices;
   }
 
-  setChosen(choice: ChoiceType) {
-    this.chosen = choice.title;
-  }
-
-  createAction(): ProductAction | null {
-    switch (this.chosen) {
+  createAction(choice: choiceEnum): ProductAction | null {
+    switch (choice as string) {
       case "get_product":
         return new GetProductAction();
       case "get_products":
