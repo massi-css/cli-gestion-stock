@@ -6,6 +6,7 @@ import {
   UpdateProductAction,
   DeleteProductAction,
   SearchProductAction,
+  ManageStockAction,
 } from "./actions";
 import { ChoiceType, choiceEnum } from "./types";
 
@@ -17,6 +18,7 @@ class ActionsFactory {
     { title: "update_product", desc: "Update existing product" },
     { title: "delete_product", desc: "Delete existing product" },
     { title: "search_product", desc: "Search product by name/desc" },
+    { title: "manage_stock", desc: "Manage product stock (add/update/remove)" },
   ];
 
   getChoices() {
@@ -37,6 +39,8 @@ class ActionsFactory {
         return new DeleteProductAction();
       case "search_product":
         return new SearchProductAction();
+      case "manage_stock":
+        return new ManageStockAction();
       default:
         return null;
     }

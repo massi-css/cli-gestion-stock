@@ -1,7 +1,7 @@
 import * as p from "@clack/prompts";
 import dotenv from "dotenv";
 import ActionsFactory from "./actionsFactory";
-import { ChoiceType, choiceEnum } from "./types";
+import { ChoiceType } from "./types";
 import color from "picocolors";
 
 const main = async () => {
@@ -184,6 +184,42 @@ const main = async () => {
             const result = await action.execute(searchTerm, limit);
             s.stop("Products searched successfully.");
             p.log.success(`Search results:`);
+            console.table(result.data);
+          } catch (e: any) {
+            s.stop(e.message);
+          }
+          break;
+        }
+        case "manage_stock": {
+          const productList = await factory.createAction("get_products")?.execute();
+          const productId = (await p.select({
+            message: "Select a product to manage stock:",
+            options: productList.data.map((product: any) => ({
+              label: product.name,
+              value: product.id,
+            })),
+          })) as string;
+          const actionType = (await p.select({
+            message: "Select stock action:",
+            options: [
+              { label: "Add Stock", value: "add" },
+              { label: "Update Stock", value: "update" },
+              { label: "Remove Stock", value: "remove" },
+            ],
+          })) as "add" | "update" | "remove";
+
+          const quantity = parseInt(
+            (await p.text({
+              message: `Enter the quantity to ${actionType} :`,
+              initialValue: "0",
+            })) as string
+          );
+          const s = p.spinner();
+          s.start("Managing stock...");
+          try {
+            const result = await action.execute({ productId, quantity, action: actionType });
+            s.stop("Stock updated successfully.");
+            p.log.success(`Stock action result:`);
             console.table(result.data);
           } catch (e: any) {
             s.stop(e.message);

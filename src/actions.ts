@@ -58,6 +58,29 @@ class SearchProductAction implements ProductAction {
   }
 }
 
+class ManageStockAction implements ProductAction {
+  async execute(data: {
+    productId: string;
+    quantity: number;
+    action: "add" | "update" | "remove";
+  }) {
+    const { productId, quantity, action } = data;
+
+    const endpointMap = {
+      add: "POST",
+      update: "PUT",
+      remove: "DELETE",
+    };
+
+    const response = await axios({
+      method: endpointMap[action],
+      url: `${process.env.API_BASE_URL}/products/${productId}/stock`,
+      data: { quantity },
+    });
+
+    return response;
+  }
+}
 
 export {
   ProductAction,
@@ -67,4 +90,5 @@ export {
   UpdateProductAction,
   DeleteProductAction,
   SearchProductAction,
+  ManageStockAction,
 };

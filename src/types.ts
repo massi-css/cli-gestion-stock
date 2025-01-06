@@ -4,7 +4,8 @@ export type choiceEnum =
   | "add_product"
   | "update_product"
   | "delete_product"
-  | "search_product";
+  | "search_product"
+  | "manage_stock";
 
 export interface ChoiceType {
   title: choiceEnum;
